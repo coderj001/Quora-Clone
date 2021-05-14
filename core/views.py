@@ -8,7 +8,7 @@ from core.forms import RegisterForm
 
 
 def home(request):
-    return HttpResponse('<h1>Home</h1>')
+    return render(request, 'core/home.html')
 
 
 class RegisterView(FormView):

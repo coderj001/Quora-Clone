@@ -1,4 +1,5 @@
 from django.contrib.auth.base_user import BaseUserManager
+from django.db import models
 
 
 class UserManager(BaseUserManager):
@@ -18,7 +19,6 @@ class UserManager(BaseUserManager):
         return user
 
     def create_user(self, email, username, password=None, **extra_fields):
-        extra_fields.setdefault('is_superuser', False)
         return self._create_user(
             email,
             username,
@@ -28,6 +28,8 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, username, password, **extra_fields):
         extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_active', True)
+        extra_fields.setdefault('is_admin', True)
 
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
@@ -38,3 +40,8 @@ class UserManager(BaseUserManager):
             password,
             **extra_fields
         )
+
+
+class AnswerManager(models.Manager):
+    def get_queryset(self):
+        return super(AnswerManager, self).get_queryset().filter(status="published")

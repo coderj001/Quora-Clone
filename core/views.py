@@ -1,5 +1,4 @@
-from django.contrib.auth import login
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth import login, logout
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, reverse
 from django.views.generic.edit import FormView
@@ -13,7 +12,7 @@ def home(request):
 
 
 class doLoginView(FormView):
-    success_url = "/"
+    success_url = '/'
     form_class = UserLoginForm
     template_name = "Login.html"
 
@@ -41,3 +40,8 @@ class RegisterView(FormView):
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
+
+
+def user_logout(request):
+    logout(request)
+    return redirect(reverse("core:login-view"))

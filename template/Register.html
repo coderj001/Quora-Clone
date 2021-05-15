@@ -12,7 +12,7 @@
       </p>
       {% if form %}
 
-        <form action="." method="post">
+        <form action="{% url 'core:register-view' %}" method="post">
           {% csrf_token %}
           <!-- Username input -->
           <div class="form-outline mb-4">

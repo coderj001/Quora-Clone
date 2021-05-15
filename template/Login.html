@@ -12,7 +12,7 @@
       </p>
       {% if form %}
 
-        <form action="." method="post">
+        <form action="{% url 'core:login-view' %}{% if request.GET.next %}?next={{request.GET.next}}{%endif%}" method="post">
           {% csrf_token %}
           <!-- Email input -->
           <div class="form-outline mb-4">
@@ -35,7 +35,8 @@
 
             <div class="col">
               <!-- Simple link -->
-              <a href="{% url 'core:register-view' %}">Create a account</a>
+              <a href="{% url 'core:register-view' %}">
+                Create a account</a>
             </div>
           </div>
           <!-- Submit button -->

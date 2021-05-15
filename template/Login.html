@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="card text-center">
+    <h5 class="card-header">
+      Login</h5>
+    <div class="card-body">
+      <h5 class="card-title">
+        Quora-Clone</h5>
+      <p class="card-text">
+        A best place for learn and share knowledge.
+      </p>
+      {% if form %}
+        <form action="." method="post">
+          {% csrf_token %}
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+            {# <input type="email" id="email" class="form-control"/> #}
+            {{ form.query }}
+            <label class="form-label" for="email">
+              Email/Username</label>
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-4">
+            {# <input type="password" id="password" class="form-control"/> #}
+            {{ form.password }}
+            <label class="form-label" for="password">
+              Password</label>
+          </div>
+
+          <!-- 2 column grid layout for inline styling -->
+          <div class="row mb-4">
+            <div class="col d-flex justify-content-center">
+              <div class="col">
+                <!-- Simple link -->
+                <a href="#!">
+                  Register? If new</a>
+              </div>
+            </div>
+
+            <div class="col">
+              <!-- Simple link -->
+              <a href="#!">
+                Forgot password?</a>
+            </div>
+          </div>
+          <!-- Submit button -->
+          <button type="submit" class="btn btn-primary btn-block">
+            Sign in</button>
+        </form>
+      {% endif %}
+
+    </div>
+  </div>
+{% endblock content %}

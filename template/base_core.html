@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
     <title>
-      Quora-Clone: A best place for learn and share knowledge.
+      Quora
+      {% block TITLE %}{% endblock TITLE %}
     </title>
     <!-- MDB icon -->
     <link rel="icon" href=" {% static 'img/mdb-favicon.ico' %}" type="image/x-icon"/>
@@ -16,11 +17,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"/>
     <!-- MDB -->
     <link rel="stylesheet" href=" {% static 'css/mdb.min.css' %}"/>
-    <style>
-body{
-    background-image: url(" {% static 'img/backimg.jpg' %}")
-}
-    </style>
   </head>
   <body>
     <!-- Start your project here-->
@@ -39,3 +35,4 @@ body{
     <script type="text/javascript"></script>
   </body>
 </html>
+

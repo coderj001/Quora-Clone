@@ -38,8 +38,10 @@ class UserCreationForm(forms.ModelForm):
 
 
 class UserLoginForm(forms.Form):
-    query = forms.CharField(label='Username or Email')
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    query = forms.CharField(label='Username or Email', widget=forms.TextInput(
+        attrs={'class': 'form-control'}))
+    password = forms.CharField(
+        label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
     def clean(self, *args, **kwargs):
         query = self.cleaned_data.get('query')

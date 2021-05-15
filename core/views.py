@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render, reverse
 from django.views.generic.edit import FormView
 
-from core.forms import RegisterForm, UserLoginForm
+from core.forms import UserCreationForm, UserLoginForm
 
 
 def home(request):
@@ -20,7 +20,8 @@ class doLoginView(FormView):
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
-            login(request, form.cleaned_data.get('user_obj'))
+            user = form.cleaned_data.get('user_obj')
+            login(request, user)
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
@@ -28,21 +29,15 @@ class doLoginView(FormView):
 
 class RegisterView(FormView):
     success_url = '/'
-
-    def get(self, request):
-        content = {}
-        content['form'] = RegisterForm
-        return render(request, 'register.html', content)
+    form_class = UserCreationForm
+    template_name = "Register.html"
 
     def post(self, request):
-        content = {}
-        form = RegisterForm(request.POST, request.FILES or None)
+        form = self.get_form()
         if form.is_valid():
-            user = form.save(commit=False)
-            user.password = make_password(form.cleaned_data['password'])
-            user.save()
-            login(request, user)
-            return redirect(reverse('dashboard-view'))
-        content['form'] = form
-        template = 'register.html'
-        return render(request, template, content)
+            instant = form.save()
+            instant.save()
+            login(request, instant)
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)

@@ -71,19 +71,51 @@ class User(AbstractBaseUser, PermissionsMixin):
         return str(self.username)
 
 
+class Question(models.Model):
+    question = models.CharField(
+        max_length=300,
+        null=False,
+        blank=False,
+        verbose_name="Question"
+    )
+    description = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_created=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="question",
+        verbose_name="Created By"
+    )
+
+    class Meta:
+        verbose_name = "Question"
+        verbose_name_plural = "Questions"
+        ordering = ('-created_at', '-updated_at')
+
+    def __str__(self):
+        return super(Question, self).__str__()
+
+
 class Answer(models.Model):
     STATUS_CHOICES = (
         ('draft', 'Draft'),
         ('published', 'Published'),
     )
     Answer = models.TextField(blank=False, null=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_created=True)
-    answered_by = models.ForeignKey(
+    created_at = models.DateTimeField(auto_created=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="answer",
         verbose_name="Answered By"
+    )
+    question = models.ForeignKey(
+        Question,
+        on_delete=models.CASCADE,
+        related_name="answer",
+        verbose_name="Question"
     )
 
     status = models.CharField(
@@ -96,43 +128,9 @@ class Answer(models.Model):
     published = AnswerManager()
 
     class Meta:
-        verbose_name = "Answere"
-        verbose_name_plural = "Answeres"
+        verbose_name = "Answer"
+        verbose_name_plural = "Answers"
         ordering = ('-created_at', '-updated_at')
 
     def __str__(self):
         return super(Answer, self).__str__()
-
-
-class Question(models.Model):
-    question = models.CharField(
-        max_length=300,
-        null=False,
-        blank=False,
-        verbose_name="Question"
-    )
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_created=True)
-    created_by = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name="question",
-        verbose_name="Created By"
-    )
-    answers = models.ManyToManyField(
-        Answer,
-        related_name='question',
-        verbose_name='Answers'
-    )
-
-    class Meta:
-        verbose_name = "Question"
-        verbose_name_plural = "Questions"
-        ordering = ('-created_at', '-updated_at')
-
-    def __str__(self):
-        if len(self.question) > 25:
-            return f"{self.question[:25]}..."
-        else:
-            return self.question

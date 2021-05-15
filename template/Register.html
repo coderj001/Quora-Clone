@@ -3,39 +3,51 @@
 {% block content %}
   <div class="card text-center">
     <h5 class="card-header">
-      Login</h5>
+      Register</h5>
     <div class="card-body">
       <h5 class="card-title">
         Quora-Clone</h5>
       <p class="card-text">
-        A best place for learn and share knowledge.
+      Join our community, we learn and share knowledge.
       </p>
       {% if form %}
 
         <form action="." method="post">
           {% csrf_token %}
+          <!-- Username input -->
+          <div class="form-outline mb-4">
+            {{ form.username }}
+            <label class="form-label" for="username">
+              Username</label>
+          </div>
+
           <!-- Email input -->
           <div class="form-outline mb-4">
-            {# <input type="email" id="email" class="form-control"/> #}
-            {{ form.query }}
+            {{ form.email }}
             <label class="form-label" for="email">
-              Email/Username</label>
+              Email</label>
           </div>
 
           <!-- Password input -->
           <div class="form-outline mb-4">
-            {# <input type="password" id="password" class="form-control"/> #}
-            {{ form.password }}
-            <label class="form-label" for="password">
+            {{ form.password1 }}
+            <label class="form-label" for="password1">
               Password</label>
+          </div>
+
+          <!-- Password Confirmation input -->
+          <div class="form-outline mb-4">
+            {{ form.password2 }}
+            <label class="form-label" for="password2">
+              Password Confirmation</label>
           </div>
 
           <!-- 2 column grid layout for inline styling -->
           <div class="row mb-4">
-
             <div class="col">
               <!-- Simple link -->
-              <a href="{% url 'core:register-view' %}">Create a account</a>
+              <a href="{% url 'core:login-view' %}">
+                Have a account</a>
             </div>
           </div>
           <!-- Submit button -->

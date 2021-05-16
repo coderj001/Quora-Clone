@@ -3,5 +3,10 @@
 {% block TITLE %} | Home {% endblock TITLE %}
 
 {% block content %}
-  <h1> Hello</h1>
+  {% include "core/utils/navbar.html" with user=request.user %}
+  <div class="container">
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+      <div class="text-center"></div>
+    </div>
+  </div>
 {% endblock content %}

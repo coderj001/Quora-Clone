@@ -3,6 +3,7 @@ import uuid
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
+from django.urls import reverse
 
 from core.manager import AnswerManager, UserManager
 
@@ -63,9 +64,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     # TODO:  <14-05-21, coderj001> # Add redirect to return
     def get_absolute_url(self):
-        slug_id = ''.join(str(self.id).split('-'))
-        slug = f"{self.username}_{slug_id}"
-        return f"/p/{slug[:15]}"
+        return reverse("core:profile", kwargs={'pk': self.id})
 
     def __str__(self):
         return str(self.username)

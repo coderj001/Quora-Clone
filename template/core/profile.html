@@ -1,0 +1,155 @@
+{% extends "base_core.html" %}
+
+{% block TITLE %}
+  | Profile
+{% endblock TITLE %}
+
+{% block content %}
+  {% include "core/utils/navbar.html" with user=request.user %}
+
+  <div class="container">
+    <div class="m-1 p-2">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'core:home' %}">
+              Home</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Profile</li>
+        </ol>
+      </nav>
+    </div>
+    <hr class="dropdown-divider"/>
+    <div class="d-flex" style="height: 100vh;">
+      <div class="row gx-2 justify-content-center">
+
+        <div class="col-md-6">
+          <div>
+            <h4>
+              {{object.username}}
+            </h4>
+            <span>
+              <small>
+                <b>
+                  Date Joint:
+                </b>
+                {{object.date_joined}}
+              </small>
+            </span>
+
+            <br>
+
+            <span>
+              <small>
+                <b>
+                  Total Question Asked:
+                </b>
+                {{object.question.count}}
+              </small>
+            </span>
+
+            <br>
+
+            <span>
+              <small>
+                <b>
+                  Total Answer Given:
+                </b>
+                {{object.answer.count}}
+              </small>
+            </span>
+
+            <br>
+            <br>
+
+            <span>
+              <small>
+                <b>
+
+                  Recently Questions
+                </b>
+              </small>
+              <hr class="dropdown-divider"/>
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+                aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </div>
+            </span>
+
+            <br>
+            <br>
+
+            <span>
+              <small>
+                <b>
+
+                  Recently Answers
+                </b>
+              </small>
+              <hr class="dropdown-divider"/>
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+                aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </div>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <form class="row align-items-center">
+
+            <div class="col-6 p-2">
+              <label class="visually-hidden" for="inlineFormInputGroupUsername">
+                First Name</label>
+              <div class="input-group">
+                <div class="input-group-text">
+                  First Name</div>
+                {# <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Username"/> #}
+                {{form.first_name}}
+              </div>
+            </div>
+
+            <div class="col-6">
+              <label class="visually-hidden" for="inlineFormInputGroupUsername">
+                Last Name</label>
+              <div class="input-group">
+                <div class="input-group-text">
+                  Last Name</div>
+                {# <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Username"/> #}
+                {{form.last_name}}
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label class="visually-hidden" for="inlineFormInputGroupUsername">
+                Email</label>
+              <div class="input-group">
+                <div class="input-group-text">
+                  Email</div>
+                {# <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Username"/> #}
+                {{form.email}}
+              </div>
+            </div>
+
+            <div class="col-12 mb-4 p-3 ">
+              <label class="visually-hidden" for="inlineFormInputGroupUsername">Bio</label>
+              {# <textarea class="form-control" id="form6Example7" rows="9" placeholder="Bio"></textarea> #}
+              {{form.bio}}
+            </div>
+
+
+            <div class="col-12 ">
+              <button type="submit" class="btn btn-success">Update</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock content %}

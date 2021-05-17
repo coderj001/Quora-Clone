@@ -76,3 +76,35 @@ class UserLoginForm(forms.Form):
 
         self.cleaned_data["user_obj"] = user_obj
         return super(UserLoginForm, self).clean(*args, **kwargs)
+
+
+class UserProfileForm(forms.ModelForm):
+    first_name = forms.CharField(label='First Name', widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'id': 'first_name inlineFormInputGroupFirstName',
+            'placeholder': 'First Name',
+        }))
+    last_name = forms.CharField(label='Last Name', widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'id': 'last_name inlineFormInputGroupLastName',
+            'placeholder': 'Last Name',
+        }))
+    email = forms.CharField(label='Email', widget=forms.EmailInput(
+        attrs={
+            'class': 'form-control',
+            'id': 'email inlineFormInputGroupEmail',
+            'placeholder': 'Email',
+        }))
+    bio = forms.CharField(label='Last Name', widget=forms.Textarea(
+        attrs={
+            'class': 'form-control',
+            'id': 'bio',
+            'placeholder': 'Bio',
+            'row': '9',
+        }))
+
+    class Meta:
+        model = User
+        fields = ('email', 'first_name', 'last_name', 'bio')

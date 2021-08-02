@@ -72,7 +72,7 @@ class UserLoginForm(forms.Form):
 
         user_obj = user_qs_final.first()
         if not user_obj.check_password(password):
-            raise forms.ValidationError(' password is not correct')
+            raise forms.ValidationError('password is not correct')
 
         self.cleaned_data["user_obj"] = user_obj
         return super(UserLoginForm, self).clean(*args, **kwargs)
@@ -108,3 +108,9 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name', 'bio')
+
+    def save(self, commit=True):
+        user = super(UserProfileForm, self).save(commit=False)
+        if commit:
+            user.save()
+        return user

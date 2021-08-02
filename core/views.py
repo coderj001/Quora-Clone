@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import redirect, render, reverse
 from django.urls import reverse_lazy
 from django.views.generic import View
 from django.views.generic.detail import SingleObjectMixin
@@ -11,7 +11,6 @@ from core.models import User
 
 @login_required(login_url=reverse_lazy("core:login-view"))
 def home(request):
-    print(request.user)
     return render(request, 'core/home.html')
 
 
@@ -51,7 +50,22 @@ class UserProfile(SingleObjectMixin, FormMixin, View):
         context.update(kwargs)
         return context
 
+    def get_success_url(self):
+        return self.request.user.get_absolute_url()
+
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
         return render(request, self.template_name, context=context)
+
+    # TODO:  <02-08-21, coderj001> # update profile invalid
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+
+class AskQuestionView():
+    pass

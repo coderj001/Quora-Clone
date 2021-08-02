@@ -32,10 +32,11 @@ class RegisterView(FormView):
     form_class = UserCreationForm
     template_name = "Register.html"
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
             instant = form.save()
+            instant.email = form.cleaned_data.get('email')
             instant.save()
             login(request, instant)
             return self.form_valid(form)

@@ -101,7 +101,7 @@ class Answer(models.Model):
         ('draft', 'Draft'),
         ('published', 'Published'),
     )
-    Answer = models.TextField(blank=False, null=False)
+    answer = models.TextField(blank=False, null=False)
     created_at = models.DateTimeField(auto_created=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(

@@ -2,13 +2,14 @@ from django.urls import path
 
 from core.adminviews import AdminDashBoard
 from core.authviews import RegisterView, doLoginView, user_logout
-from core.views import home, UserProfile
+from core.views import AskQuestionView, UserProfile, home
 
 app_name = 'core'
 
 urlpatterns = [
     # core views
     path('', home, name='home'),
+    path('askquestion/', AskQuestionView.as_view(), name='askquestion'),
     path('p/<uuid:pk>/', UserProfile.as_view(), name='profile'),
 
     # Auth views

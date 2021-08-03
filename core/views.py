@@ -1,11 +1,12 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render, reverse
 from django.urls import reverse_lazy
 from django.views.generic import View
 from django.views.generic.detail import SingleObjectMixin
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import FormMixin, FormView
 
-from core.forms import UserProfileForm
+from core.forms import QuestionForm, UserProfileForm
 from core.models import User
 
 
@@ -14,7 +15,7 @@ def home(request):
     return render(request, 'core/home.html')
 
 
-class UserProfile(SingleObjectMixin, FormMixin, View):
+class UserProfile(LoginRequiredMixin, SingleObjectMixin, FormMixin, View):
     # for SingleObjectMixin
     model = User
     queryset = User.objects.all()
@@ -67,5 +68,7 @@ class UserProfile(SingleObjectMixin, FormMixin, View):
             return self.form_invalid(form)
 
 
-class AskQuestionView():
-    pass
+class AskQuestionView(LoginRequiredMixin, FormView):
+    success_url = reverse_lazy('core:home')
+    form_class = QuestionForm
+    template_name = 'core/question.html'

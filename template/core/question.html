@@ -1,0 +1,46 @@
+{% extends "base_core.html" %}
+
+{% block TITLE %}
+    | Questions
+{% endblock TITLE %}
+
+{% block content %}
+    {% include "core/utils/navbar.html" with user=request.user %}
+
+    <div class="container">
+        <div class="m-1 p-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'core:home' %}">
+                            Home</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Ask Question</li>
+                </ol>
+            </nav>
+        </div>
+        <hr class="dropdown-divider"/>
+        <br>
+        <br>
+        <br>
+
+        <div class="d-flex" style="height: 100vh;">
+            {% if form %}
+                <form method="post" action=".">
+                    {% csrf_token %}
+                    <div class="form-outline mb-4 lg-12">
+                        {{ form.question }}
+                        <label class="form-label" for="form4Example2">Question</label>
+                    </div>
+                    <div class="form-outline mb-4 lg-12">
+                        {{ form.description }}
+                        <label class="form-label" for="form4Example3">Description</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Post Questions</button>
+                </form>
+            {% endif %}
+        </div>
+
+    </div>
+{% endblock content %}
+

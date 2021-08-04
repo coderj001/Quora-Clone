@@ -95,6 +95,12 @@ class Question(models.Model):
     def __str__(self):
         return super(Question, self).__str__()
 
+    def get_absolute_url(self):
+        return reverse(
+            'core:question-add',
+            kwargs={'id': self.id}
+        )
+
 
 class Answer(models.Model):
     STATUS_CHOICES = (

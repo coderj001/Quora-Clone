@@ -9,7 +9,7 @@ app_name = 'core'
 urlpatterns = [
     # core views
     path('', home, name='home'),
-    path('askquestion/', AskQuestionView.as_view(), name='askquestion'),
+    path('question/add', AskQuestionView.as_view(), name='question-add'),
     path('p/<uuid:pk>/', UserProfile.as_view(), name='profile'),
 
     # Auth views

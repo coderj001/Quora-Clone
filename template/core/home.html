@@ -3,10 +3,30 @@
 {% block TITLE %} | Home {% endblock TITLE %}
 
 {% block content %}
-  {% include "core/utils/navbar.html" with user=request.user %}
-  <div class="container">
-    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-      <div class="text-center"></div>
+    {% include "core/utils/navbar.html" with user=request.user %}
+    <div class="container">
+        <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+            <div class="text-center">
+
+                {% if question %}
+                    <ul class="list-group">
+                        {% for ques in question %}
+                            <li class="list-group-item d-flex justify-content-center align-items-start">
+                                <a href="#">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold justify-content-center">
+                                            {{ ques.question|truncatechars:100 }}
+                                        </div>
+                                        {{ ques.description|truncatechars:500 }}
+                                    </div>
+                                </a>
+                                <span class="badge bg-primary rounded-pill">14</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+            </div>
+        </div>
     </div>
-  </div>
 {% endblock content %}

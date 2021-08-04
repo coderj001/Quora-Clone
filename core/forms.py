@@ -157,11 +157,11 @@ class UserProfileForm(forms.ModelForm):
             'bio'
         )
 
-    def save(self, commit=True):
-        user = super(UserProfileForm, self).save(commit=False)
-        if commit:
-            user.save()
-        return user
+    # def save(self, commit=True):
+    #     user = super(UserProfileForm, self).save(commit=False)
+    #     if commit:
+    #         user.save()
+    #     return user
 
 
 class QuestionForm(forms.ModelForm):
@@ -191,6 +191,12 @@ class QuestionForm(forms.ModelForm):
             'question',
             'description'
         )
+
+    # def save(self, commit=True):
+    #     question = super(QuestionForm, self).save(commit=False)
+    #     if commit:
+    #         question.save()
+    #     return question
 
 
 class AnswerForm(forms.ModelForm):

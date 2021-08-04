@@ -1,18 +1,25 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, reverse
 from django.urls import reverse_lazy
 from django.views.generic import View
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import FormMixin, FormView
+from django.utils import timezone
 
 from core.forms import QuestionForm, UserProfileForm
-from core.models import User
+from core.models import Answer, Question, User
 
 
 @login_required(login_url=reverse_lazy("core:login-view"))
 def home(request):
-    return render(request, 'core/home.html')
+    question = Question.objects.all()
+    return render(
+        request,
+        'core/home.html',
+        context={'question': question}
+    )
 
 
 class UserProfile(LoginRequiredMixin, SingleObjectMixin, FormMixin, View):
@@ -72,3 +79,12 @@ class AskQuestionView(LoginRequiredMixin, FormView):
     success_url = reverse_lazy('core:home')
     form_class = QuestionForm
     template_name = 'core/question.html'
+
+    def form_valid(self, form, *args, **kwargs):
+        question = Question()
+        question.question = form.cleaned_data.get('question')
+        question.description = form.cleaned_data.get('description')
+        question.created_by = self.request.user
+        question.created_at = timezone.now()
+        question.save()
+        return super(AskQuestionView, self).form_valid(form)

@@ -7,20 +7,19 @@
     <div class="container">
         <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
             <div class="text-center">
-
-                {% if question %}
+                {% if questions %}
                     <ul class="list-group">
-                        {% for ques in question %}
+                        {% for question in questions %}
                             <li class="list-group-item d-flex justify-content-center align-items-start">
-                                <a href="#">
+                                <a href="{{ question.get_absolute_url }}">
                                     <div class="ms-2 me-auto">
                                         <div class="fw-bold justify-content-center">
-                                            {{ ques.question|truncatechars:100 }}
+                                            {{ question.question|truncatechars:100 }}
                                         </div>
-                                        {{ ques.description|truncatechars:500 }}
+                                        {{ question.description|truncatechars:500 }}
                                     </div>
                                 </a>
-                                <span class="badge bg-primary rounded-pill">14</span>
+                                <span class="badge bg-primary rounded-pill">{{ question.answer_count }}</span>
                             </li>
                         {% endfor %}
                     </ul>

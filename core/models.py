@@ -97,9 +97,12 @@ class Question(models.Model):
 
     def get_absolute_url(self):
         return reverse(
-            'core:question-add',
-            kwargs={'id': self.id}
+            'core:question-detail',
+            args=[self.id]
         )
+
+    def answer_count(self):
+        return Answer.published.filter(question__id=self.id).count()
 
 
 class Answer(models.Model):

@@ -5,6 +5,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = environ.get('secret_key')
 
+SERVER_TYPE = environ.get('server_type')
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

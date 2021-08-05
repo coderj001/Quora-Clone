@@ -192,12 +192,6 @@ class QuestionForm(forms.ModelForm):
             'description'
         )
 
-    # def save(self, commit=True):
-    #     question = super(QuestionForm, self).save(commit=False)
-    #     if commit:
-    #         question.save()
-    #     return question
-
 
 class AnswerForm(forms.ModelForm):
     answer = forms.CharField(

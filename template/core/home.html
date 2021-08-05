@@ -19,7 +19,7 @@
                                         {{ question.description|truncatechars:500 }}
                                     </div>
                                 </a>
-                                <span class="badge bg-primary rounded-pill">{{ question.answer_count }}</span>
+                                <span class="badge bg-primary rounded-pill">{{ question.answer.count }}</span>
                             </li>
                         {% endfor %}
                     </ul>

@@ -5,11 +5,19 @@ from django.shortcuts import redirect, render, reverse
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import View
-from django.views.generic.detail import SingleObjectMixin, DetailView
+from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import FormMixin, FormView
 
-from core.forms import QuestionForm, UserProfileForm
-from core.models import Answer, Question, User
+from core.forms import (
+    AnswerForm,
+    QuestionForm,
+    UserProfileForm
+)
+from core.models import (
+    Answer,
+    Question,
+    User
+)
 
 
 @login_required(login_url=reverse_lazy("core:login-view"))
@@ -85,7 +93,7 @@ class AskQuestionView(LoginRequiredMixin, FormView):
         question.question = form.cleaned_data.get('question')
         question.description = form.cleaned_data.get('description')
         question.created_by = self.request.user
-        question.created_at = timezone.now()
+        question.updated_at = timezone.now()
         question.save()
         return super(AskQuestionView, self).form_valid(form)
 
@@ -97,6 +105,30 @@ class QuestionDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['answer'] = Answer.published.filter(
-            question=self.get_object())
+        obj = self.get_object()
+        context['answers'] = obj.answer.all()
+        context['form'] = AnswerForm()
         return context
+
+
+class AnswerFormView(LoginRequiredMixin, FormView):
+    form_class = AnswerForm
+    success_url = reverse_lazy('core:home')
+
+    def get_success_url(self):
+        try:
+            return reverse(
+                'core:question-detail',
+                args=[self.kwargs.get('pk')]
+            )
+        except:
+            return str(self.success_url)
+
+    def form_valid(self, form, *args, **kwargs):
+        answer = Answer()
+        answer.answer = form.cleaned_data.get('answer')
+        answer.updated_at = timezone.now()
+        answer.user = self.request.user
+        answer.question = Question.objects.get(id=self.kwargs.get('pk'))
+        answer.save()
+        return super(AnswerFormView, self).form_valid(form)

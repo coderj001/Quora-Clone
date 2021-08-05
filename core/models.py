@@ -78,8 +78,8 @@ class Question(models.Model):
         verbose_name="Question"
     )
     description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_created=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_created=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -101,9 +101,6 @@ class Question(models.Model):
             args=[self.id]
         )
 
-    def answer_count(self):
-        return Answer.published.filter(question__id=self.id).count()
-
 
 class Answer(models.Model):
     STATUS_CHOICES = (
@@ -111,8 +108,8 @@ class Answer(models.Model):
         ('published', 'Published'),
     )
     answer = models.TextField(blank=False, null=False)
-    created_at = models.DateTimeField(auto_created=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_created=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

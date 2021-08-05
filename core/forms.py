@@ -196,11 +196,11 @@ class QuestionForm(forms.ModelForm):
 class AnswerForm(forms.ModelForm):
     answer = forms.CharField(
         label='answer',
-        widget=forms.TextInput(
+        widget=forms.Textarea(
             attrs={
                 'class': 'form-control',
-                'id': 'answer inlineFormInputGroupFirstName',
-                'placeholder': 'Answer'
+                'id': 'answer',
+                'row': '9'
             }
         )
     )

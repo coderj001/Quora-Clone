@@ -1,8 +1,18 @@
 from django.urls import path
 
 from core.adminviews import AdminDashBoard
-from core.authviews import RegisterView, doLoginView, user_logout
-from core.views import AskQuestionView, UserProfile, home, QuestionDetailView
+from core.authviews import (
+    RegisterView,
+    doLoginView,
+    user_logout
+)
+from core.views import (
+    AskQuestionView,
+    UserProfile,
+    home,
+    QuestionDetailView,
+    AnswerFormView
+)
 
 app_name = 'core'
 
@@ -11,6 +21,7 @@ urlpatterns = [
     path('', home, name='home'),
     path('question/add', AskQuestionView.as_view(), name='question-add'),
     path('question/<int:pk>/', QuestionDetailView.as_view(), name='question-detail'),
+    path('answer/<int:pk>/', AnswerFormView.as_view(), name='answer-form'),
     path('p/<uuid:pk>/', UserProfile.as_view(), name='profile'),
 
     # Auth views

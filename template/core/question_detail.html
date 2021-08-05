@@ -19,12 +19,43 @@
                 </ol>
             </nav>
         </div>
-        <hr class="dropdown-divider"/>
-        <br>
-        <br>
-        <br>
 
-        <div class="d-flex" style="height: 100vh;"></div>
+        <hr class="dropdown-divider"/>
+
+        {% if question %}
+            <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+                <div class="text-center">
+                    <h3>{{ question.question }}</h3>
+                    <p>{{ question.description }}</p>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if form %}
+            <div class="d-flex" style="">
+                <form method="post" action="{% url 'core:answer-form' question.id %}">
+                    {% csrf_token %}
+                    <div class="form-outline mb-4 lg-12">
+                        {{ form.answer }}
+                        <label class="form-label" for="form4Example3">Answer</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Post Answer</button>
+                </form>
+            </div>
+        {% endif %}
+
+        <hr class="dropdown-divider"/>
+
+        {% if answers %}
+            <div class="">
+                {% for answer in answers %}
+                    <div class="text-center">
+                        <p class="p-2 m-2">{{ answer.answer }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
 
     </div>
 {% endblock content %}
